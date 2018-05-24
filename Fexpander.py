@@ -18,7 +18,7 @@ def expand(fpath,size):
     size*=1024#Kb
     size*=1024#bytes
     aimbytes=int(size)
-    print("%r bytes(%r MB) will be written."%(size,sizemb))
+    print("%r bytes(%r MB)"%(size,sizemb))
     file=open(fpath,"rb")
     bytesalready=len(file.read())
     file.close()
@@ -29,7 +29,7 @@ def expand(fpath,size):
         file.write(temp)
         file.close()
     else:
-        print("Your aim size is smaller than the file before.")
+        print("Wrong input!")
 
 
 
