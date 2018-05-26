@@ -29,21 +29,6 @@ mfile.close()
 print("The size is %s"%(msize))
 size=input("The size you want to reach(MB):\n")
 
-"""def autoCompelete(path,name):
-	files=fn(path)
-	boolean=False
-	index=[]
-	j=0
-	for i in range(len(files)):
-		boolean=name in files[i]
-		if(boolean):
-			index.append(i)
-			j+=1
-			print(j+":"+files[i]+"  ")
-	a=int(input("--> "))-1
-	return files[index[a]]	
-"""
-
 def expand(fpath,size):
     fpath=str(fpath)
     size=(float(size))#Mb
