@@ -2,8 +2,8 @@
 
 >Fexpander=`File expander`
 
-Increase the size of the file by adding meaningless bytes.                 
-It is useful in some situations.
+通过增加无意义的字节使文件看起来更大。                                       
+在某些情况下非常有用。
 
 
  [English](https://github.com/toushangyouxiang/Fexpander/blob/master/README.md) 
