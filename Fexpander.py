@@ -6,24 +6,26 @@ from os.path import exists
 from dirTest import file_name as fn
 
 
+class UnexceptedInput(Exception):
+    pass
+
+
 def choose_file(mpath):
     try:
         mfiles = fn(mpath)
     except FileNotFoundError:
-        print(color.generate("Wrong path!", color.color.RED))
-        sys.exit(0)
+        raise UnexceptedInput("wrong path")
     for index, item in enumerate(mfiles):
         print(str(index+1)+"\t"+item)
     print(color.generate("\nplease input the index", color.color.YELLOW))
     a = input("-->")
     try:
-        int(a)
-    except ValueError:
-        print(color.generate("please input the index, not the file name!", color.color.RED))
+        a = int(a)
+    except Exception:
+        raise UnexceptedInput("wrong type")
     if(not (a - 1) in range(len(mfiles))):
-        print(color.generate("Error index!", color.color.RED))
         time.sleep(1)
-        choose_file(mpath)
+        raise UnexceptedInput("wrong index")
     return mfiles[a-1]
 
 
@@ -49,7 +51,29 @@ def expand(fpath, size):
 
 
 path = input("The path:")
-file_name = choose_file(path)
+
+
+def get_file_name(mpath):
+    try:
+        file_name = choose_file(path)
+    except UnexceptedInput as info:
+        info = str(info)
+        if(info == "wrong type"):
+            print(".")
+            print(color.generate("Wrong type of index,need an integer not the file name!", color.color.RED))
+            time.sleep(1)
+            file_name = choose_file(path)
+        elif(info == "wrong index"):
+            print(color.generate("the index is out of range!", color.color.RED))
+            time.sleep(1)
+            file_name = choose_file(path)
+        elif(info == "wrong path"):
+            print(color.generate("the path does not exists!", color.color.RED))
+            time.sleep(1)
+            path = input("The path:")
+            file_name = choose_file(path)
+
+
 mfile = open(path+"/"+file_name, "rb")
 msize = len(mfile.read())/1024/1024
 mfile.close()
@@ -61,4 +85,3 @@ if(exists(path)):
     expand((path+"/"+name), size)
 else:
     print(color.generate("Wrong path!", color.color.RED))
-
