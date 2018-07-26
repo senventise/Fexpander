@@ -45,35 +45,38 @@ def expand(fpath, size):
         file = open(fpath, "ab")
         file.write(temp)
         file.close()
-        print(color.generate("%r MB was written" % size, color.color.GREEN))
+        print(color.generate("\nDone,%r kb was written" % size, color.color.GREEN))
     else:
         print(color.generate("Wrong size!", color.color.RED))
 
 
 path = input("The path:")
+file_name = ""
 
 
-def get_file_name(mpath):
+def get_file_name():
+    global path, file_name
     try:
         file_name = choose_file(path)
+        # return 0
     except UnexceptedInput as info:
         info = str(info)
         if(info == "wrong type"):
-            print(".")
             print(color.generate("Wrong type of index,need an integer not the file name!", color.color.RED))
             time.sleep(1)
-            file_name = choose_file(path)
+            fname = get_file_name()
         elif(info == "wrong index"):
             print(color.generate("the index is out of range!", color.color.RED))
             time.sleep(1)
-            file_name = choose_file(path)
+            fname = get_file_name()
         elif(info == "wrong path"):
             print(color.generate("the path does not exists!", color.color.RED))
             time.sleep(1)
             path = input("The path:")
-            file_name = choose_file(path)
+            fname = get_file_name()
 
 
+get_file_name()
 mfile = open(path+"/"+file_name, "rb")
 msize = len(mfile.read())/1024/1024
 mfile.close()
@@ -82,6 +85,6 @@ print("The size is %s" % (msize))
 size = input("The size you want to reach(MBit):\n")
 if(exists(path)):
     print(color.generate("The path exists.", color.color.GREEN))
-    expand((path+"/"+name), size)
+    expand((path+"/"+file_name), size)
 else:
     print(color.generate("Wrong path!", color.color.RED))
