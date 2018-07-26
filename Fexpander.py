@@ -3,11 +3,33 @@ import sys
 import color
 import time
 from os.path import exists
-from dirTest import file_name as fn
+from dirUtils import file_name as fn
 
 
 class UnexceptedInput(Exception):
     pass
+
+
+def get_file_name():
+    global path, file_name
+    try:
+        file_name = choose_file(path)
+        # return 0
+    except UnexceptedInput as info:
+        info = str(info)
+        if(info == "wrong type"):
+            print(color.generate("Wrong type of index,need an integer not the file name!", color.color.RED))
+            time.sleep(1)
+            fname = get_file_name()
+        elif(info == "wrong index"):
+            print(color.generate("the index is out of range!", color.color.RED))
+            time.sleep(1)
+            fname = get_file_name()
+        elif(info == "wrong path"):
+            print(color.generate("the path does not exists!", color.color.RED))
+            time.sleep(1)
+            path = input("The path:")
+            fname = get_file_name()
 
 
 def choose_file(mpath):
@@ -52,28 +74,6 @@ def expand(fpath, size):
 
 path = input("The path:")
 file_name = ""
-
-
-def get_file_name():
-    global path, file_name
-    try:
-        file_name = choose_file(path)
-        # return 0
-    except UnexceptedInput as info:
-        info = str(info)
-        if(info == "wrong type"):
-            print(color.generate("Wrong type of index,need an integer not the file name!", color.color.RED))
-            time.sleep(1)
-            fname = get_file_name()
-        elif(info == "wrong index"):
-            print(color.generate("the index is out of range!", color.color.RED))
-            time.sleep(1)
-            fname = get_file_name()
-        elif(info == "wrong path"):
-            print(color.generate("the path does not exists!", color.color.RED))
-            time.sleep(1)
-            path = input("The path:")
-            fname = get_file_name()
 
 
 get_file_name()
